@@ -3,6 +3,7 @@ package sopt.org.cds.domain;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import javax.persistence.*;
 
@@ -33,5 +34,28 @@ public class CartItem {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn
     private CartStore cartStore;
+
+    @Override
+    public String toString() {
+        return "cartItem{" +
+                "name='" + name + '\'' +
+                "price='" + totalPrice + '\'' +
+                "options='" + options + '\'' +
+                "count='" + count + '\'' +
+                '}';
+    }
+
+    private CartItem(String name, Integer totalPrice, String options, Integer count, CartStore cartStore) {
+        this.name = name;
+        this.totalPrice = totalPrice;
+        this.options = options;
+        this.count = count;
+        this.cartStore = cartStore; 
+        cartStore.getCartItems().add(this); //cartStore에 자기자신 추가
+    }
+
+    public static CartItem createCartItem(String name, Integer totalPrice, String options, Integer count, CartStore cartStore) {
+        return new CartItem(name, totalPrice, options, count, cartStore);
+    }
 
 }

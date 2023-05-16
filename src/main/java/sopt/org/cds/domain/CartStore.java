@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -26,5 +27,13 @@ public class CartStore {
     @JoinColumn
     private Cart cart;
 
+    private CartStore(Store store, Cart cart){
+        this.store = store;
+        this.cart = cart;
+        cartItems = new ArrayList<>();
+    }
 
+    public static CartStore createCart(Store store, Cart cart) {
+        return new CartStore(store, cart);
+    }
 }
