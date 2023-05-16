@@ -4,21 +4,25 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class MenuOption {
+@Table(name = "menu_option")
+public class Option {
     @Id
-    private String id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     @Column(nullable = false)
     private String name;
 
     @Column(nullable = false)
     private int price;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn
+    private OptionCategory optionCategory;
 }

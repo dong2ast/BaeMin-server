@@ -7,28 +7,24 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import java.util.List;
 
-
-// TODO: map with user and cart item
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Cart {
+public class CartStore {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column
-    private int totalPrice;
+    @OneToOne
+    @JoinColumn
+    private Store store;
 
-    @Column
-    private int deliveryFee;
+    @OneToMany(mappedBy = "cartStore")
+    private List<CartItem> cartItems;
 
-    @OneToOne(mappedBy = "cart")
-    private User user;
-
-
-    @OneToMany(mappedBy = "cart")
-    private List<CartStore> cartStoreList;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn
+    private Cart cart;
 
 
 }

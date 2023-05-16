@@ -4,9 +4,8 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.List;
 import java.util.UUID;
 
 
@@ -19,4 +18,11 @@ public class MenuCategory {
 
     @Column(nullable = false)
     private String name;
+
+    @OneToMany(mappedBy = "menuCategory")
+    private List<Menu> menuList;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn
+    private Store store;
 }

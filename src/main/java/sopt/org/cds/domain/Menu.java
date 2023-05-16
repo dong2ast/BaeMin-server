@@ -4,10 +4,8 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import java.util.UUID;
+import javax.persistence.*;
+import java.util.List;
 
 
 @Entity
@@ -15,7 +13,8 @@ import java.util.UUID;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Menu {
     @Id
-    private String id = UUID.randomUUID().toString();
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     @Column(nullable = false)
     private String name;
@@ -28,4 +27,11 @@ public class Menu {
 
     @Column(nullable = false)
     private int basePrice;
+
+    @OneToMany(mappedBy = "menu")
+    private List<OptionCategory> optionCategoryList;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn
+    private MenuCategory menuCategory;
 }

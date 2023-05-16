@@ -4,10 +4,7 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import java.util.UUID;
+import javax.persistence.*;
 
 
 @Entity
@@ -15,7 +12,8 @@ import java.util.UUID;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class CartItem {
     @Id
-    private String id = UUID.randomUUID().toString();
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     @Column(nullable = false)
     private String name;
@@ -31,5 +29,9 @@ public class CartItem {
 
     @Column(nullable = false)
     private int count;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn
+    private CartStore cartStore;
 
 }
