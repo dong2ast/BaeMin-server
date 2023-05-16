@@ -18,7 +18,7 @@ public class User {
     @Column(nullable = false)
     private String address;
 
-    @OneToOne
-    @JoinColumn
-    private Cart cart;
+//    @OneToOne
+//    @JoinColumn
+//    private Cart cart;
 }
