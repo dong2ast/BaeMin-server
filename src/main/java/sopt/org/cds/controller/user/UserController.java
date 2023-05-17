@@ -2,7 +2,7 @@ package sopt.org.cds.controller.user;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
@@ -16,7 +16,7 @@ import sopt.org.cds.service.UserService;
 public class UserController {
     private final UserService userService;
 
-    @PostMapping("user")
+    @GetMapping("user")
     @ResponseStatus(HttpStatus.OK)
     public ApiResponseDto<UserResponseDto> getUserInfo(@RequestHeader String authorization) {
         UserResponseDto response = userService.authentication(authorization);

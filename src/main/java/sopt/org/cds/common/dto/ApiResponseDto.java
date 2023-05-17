@@ -4,6 +4,7 @@ import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import sopt.org.cds.exception.ErrorStatus;
 import sopt.org.cds.exception.SuccessStatus;
 
@@ -26,4 +27,10 @@ public class ApiResponseDto<T> {
     public static ApiResponseDto error(ErrorStatus errorStatus) {
         return new ApiResponseDto<>(errorStatus.getHttpStatus().value(), errorStatus.getMessage()); //code, message
     }
+
+    public static ApiResponseDto error(HttpStatus errorStatus, String message) {
+        return new ApiResponseDto<>(errorStatus.value(), message); //code, message
+    }
+
+
 }
