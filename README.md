@@ -69,3 +69,5 @@ server의 작업공간
 ## 프로젝트 구조
 
 ## ERD
+<img width="954" alt="스크린샷 2023-05-17 오후 2 47 55" src="https://github.com/SOPT-32-CDS/BaeMin-server/assets/72637095/12b36a21-9d54-4fbf-bb71-8e589f895e6d">
+
