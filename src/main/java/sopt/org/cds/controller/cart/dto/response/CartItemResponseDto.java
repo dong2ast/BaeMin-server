@@ -9,7 +9,7 @@ import lombok.Getter;
 public class CartItemResponseDto {
     private Long cartItemId;
     private String name;
-    private Integer totalPrice;
+    private Integer Price;
     private Integer count;
 
     public static CartItemResponseDto of(Long cartItemId, String name, Integer totalPrice, Integer count) {

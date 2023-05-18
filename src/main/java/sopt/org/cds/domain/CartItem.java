@@ -3,7 +3,6 @@ package sopt.org.cds.domain;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
 
 import javax.persistence.*;
 
@@ -20,7 +19,7 @@ public class CartItem {
     private String name;
 
     @Column(nullable = false)
-    private int basePrice;
+    private int basePrice; //이거 있어야될까?
 
     @Column(nullable = false)
     private int totalPrice;
@@ -50,7 +49,7 @@ public class CartItem {
         this.totalPrice = totalPrice;
         this.options = options;
         this.count = count;
-        this.cartStore = cartStore; 
+        this.cartStore = cartStore;
         cartStore.getCartItems().add(this); //cartStore에 자기자신 추가
     }
 

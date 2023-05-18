@@ -8,13 +8,16 @@ import javax.persistence.EntityManager;
 
 @Repository
 @RequiredArgsConstructor
-public class CartRepository{
-
+public class CartRepository {
     private final EntityManager em;
 
-    public void save(Cart cart){ em.persist(cart);}
+    public void save(Cart cart) {
+        em.persist(cart);
+    }
+
     public Cart findOne(Long id) {
         return em.find(Cart.class, id);
     }
+
 
 }

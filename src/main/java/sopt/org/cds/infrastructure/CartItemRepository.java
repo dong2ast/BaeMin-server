@@ -9,14 +9,13 @@ import java.util.List;
 
 @Repository
 @RequiredArgsConstructor
-public class CartItemRepository{
-
+public class CartItemRepository {
     private final EntityManager em;
 
     public void save(CartItem item) {
         if (item.getId() == null) {
             em.persist(item);
-        }else {
+        } else {
             em.merge(item);
         }
     }
@@ -24,7 +23,6 @@ public class CartItemRepository{
     public List<CartItem> findAll() {
         return em.createQuery("select i from CartItem i", CartItem.class).getResultList();
     }
-
 
 
 }

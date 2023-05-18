@@ -16,15 +16,9 @@ public class CartController {
     private final CartService cartService;
     private final CartRepository cartRepository;
 
-//    @GetMapping("/{userId}")
-//    @ResponseStatus(HttpStatus.OK)
-//    public ApiResponseDto<OnePostResponseDto> getCartById(@PathVariable final Long userId) {
-//        return ApiResponseDto.success(SuccessStatus.LOADINGPOST_SUCCESS, CartService.(postId));
-//    }
-
-    @GetMapping("/cart/{userId}")
+    @GetMapping("/cart/{cartId}")
     @ResponseStatus(HttpStatus.OK)
-    public CartResponseDto getCartById(@PathVariable final Long userId) {
-        return cartService.getCart(userId);
+    public CartResponseDto getCartById(@PathVariable final Long cartId) {
+        return cartService.getCart(cartId);
     }
 }
