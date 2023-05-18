@@ -95,10 +95,21 @@ public class CartService {
     }
 
     @Transactional
+    public Long patchCartItem(Long cartItemId, Integer count) {
+        try {
+            CartItem cartItem = cartItemRepository.findbyId(cartItemId);
+            cartItem.changeCount(count);
+            return cartItemId;
+        } catch (NullPointerException e) {
+            return -1l;
+        }
+    }
+
+    @Transactional
     public Long deleteCartItem(Long cartItemId) {
         try {
             return cartItemRepository.deleteCartItem(cartItemId);
-        } catch (NullPointerException e) { //cartStore가 없는 경우 cartStore를 만들고 cartItem 생성
+        } catch (NullPointerException e) {
             return -1l;
         }
     }

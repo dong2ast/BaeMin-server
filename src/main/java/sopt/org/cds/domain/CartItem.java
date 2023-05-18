@@ -57,4 +57,8 @@ public class CartItem {
         return new CartItem(name, totalPrice, options, count, cartStore);
     }
 
+    public void changeCount(Integer count) {
+        this.count = count;
+    }
+
 }

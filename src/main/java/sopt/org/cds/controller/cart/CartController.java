@@ -25,6 +25,12 @@ public class CartController {
         return cartService.addCartItem(requestDto);
     }
 
+    @PatchMapping("/cart/{cartItemId}/{count}")
+    @ResponseStatus(HttpStatus.OK)
+    public Long patchCartItem(@PathVariable final Long cartItemId, @PathVariable final Integer count) {
+        return cartService.patchCartItem(cartItemId, count);
+    }
+
     @DeleteMapping("/cart/{cartItemId}")
     @ResponseStatus(HttpStatus.OK)
     public Long deleteCartItem(@PathVariable final Long cartItemId) {
