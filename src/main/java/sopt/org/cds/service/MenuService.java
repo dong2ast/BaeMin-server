@@ -12,9 +12,9 @@ import sopt.org.cds.domain.Option;
 import sopt.org.cds.domain.OptionCategory;
 import sopt.org.cds.infrastructure.MenuRepository;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -43,33 +43,27 @@ public class MenuService {
     }
 
     private List<OptionCategoryResponseDto> getOptionCategoryList(List<OptionCategory> optionCategoryList) {
-        List<OptionCategoryResponseDto> optionCategoryResponseList = new ArrayList<>();
-        optionCategoryList.forEach(optionCategory -> {
-            optionCategoryResponseList.add(OptionCategoryResponseDto.builder()
-                    .id(optionCategory.getId())
-                    .name(optionCategory.getName())
-                    .description(optionCategory.getDescription())
-                    .options(getOptionList(optionCategory.getOptionList()))
-                    .build()
-            );
-        });
 
-        return optionCategoryResponseList;
+        return optionCategoryList.stream()
+                .map(optionCategory -> OptionCategoryResponseDto.builder()
+                        .id(optionCategory.getId())
+                        .name(optionCategory.getName())
+                        .description(optionCategory.getDescription())
+                        .options(getOptionList(optionCategory.getOptionList()))
+                        .build())
+                .collect(Collectors.toList());
 
     }
 
     private List<OptionResponseDto> getOptionList(List<Option> optionList) {
-        List<OptionResponseDto> optionResponseList = new ArrayList<>();
-        optionList.forEach(option -> {
-            optionResponseList.add(OptionResponseDto.builder()
-                    .id(option.getId())
-                    .name(option.getName())
-                    .price(option.getPrice())
-                    .build()
-            );
-        });
 
-        return optionResponseList;
+        return optionList.stream()
+                .map(option -> OptionResponseDto.builder()
+                        .id(option.getId())
+                        .name(option.getName())
+                        .price(option.getPrice())
+                        .build())
+                .collect(Collectors.toList());
 
     }
 }

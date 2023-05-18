@@ -14,6 +14,6 @@ import java.util.List;
 @AllArgsConstructor
 public class StoreDetailResponseDto extends StoreResponseDto {
 
-    private List<MenuCategoryResponseDto> menuCategoryList;
-    
+    private List<MenuCategoryResponseDto> menuCategories;
+
 }
