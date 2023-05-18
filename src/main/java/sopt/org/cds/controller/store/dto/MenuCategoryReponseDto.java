@@ -5,29 +5,14 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
+import java.util.List;
+
 @Getter
 @SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
-public class StoreResponseDto {
-
+public class MenuCategoryReponseDto {
     private Long id;
-
     private String name;
-
-    private String image;
-
-    private Double rate;
-
-    private int minOrderAmount;
-
-    private int deliveryFee;
-
-    private int minDeliveryTime;
-
-    private int maxDeliveryTime;
-
-    private boolean hasCoupon;
-
-
+    private List<MenuResponseDto> menuList;
 }

@@ -9,25 +9,10 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
-public class StoreResponseDto {
-
+public class MenuResponseDto {
     private Long id;
-
     private String name;
-
+    private String description;
     private String image;
-
-    private Double rate;
-
-    private int minOrderAmount;
-
-    private int deliveryFee;
-
-    private int minDeliveryTime;
-
-    private int maxDeliveryTime;
-
-    private boolean hasCoupon;
-
-
+    private int basePrice;
 }
