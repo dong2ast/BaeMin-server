@@ -95,22 +95,24 @@ public class CartService {
     }
 
     @Transactional
-    public Long patchCartItem(Long cartItemId, Integer count) {
+    public CartItemResponseDto patchCartItem(Long cartItemId, Integer count) {
         try {
             CartItem cartItem = cartItemRepository.findbyId(cartItemId);
             cartItem.changeCount(count);
-            return cartItemId;
+            return CartItemResponseDto.of(cartItemId, cartItem.getName(), cartItem.getTotalPrice(), count);
         } catch (NullPointerException e) {
-            return -1l;
+            throw new NullPointerException();
         }
     }
 
     @Transactional
-    public Long deleteCartItem(Long cartItemId) {
+    public CartItemResponseDto deleteCartItem(Long cartItemId) {
         try {
-            return cartItemRepository.deleteCartItem(cartItemId);
+            CartItem cartItem = cartItemRepository.findbyId(cartItemId);
+            cartItemRepository.deleteCartItem(cartItemId);
+            return CartItemResponseDto.of(cartItem.getId(), cartItem.getName(), cartItem.getTotalPrice(), cartItem.getCount());
         } catch (NullPointerException e) {
-            return -1l;
+            throw new NullPointerException();
         }
     }
 }
