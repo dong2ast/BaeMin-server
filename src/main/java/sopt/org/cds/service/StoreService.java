@@ -4,8 +4,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpClientErrorException;
-import sopt.org.cds.controller.store.dto.MenuCategoryReponseDto;
-import sopt.org.cds.controller.store.dto.MenuResponseDto;
+import sopt.org.cds.controller.menu.dto.MenuCategoryResponseDto;
+import sopt.org.cds.controller.menu.dto.MenuResponseDto;
 import sopt.org.cds.controller.store.dto.StoreDetailResponseDto;
 import sopt.org.cds.controller.store.dto.StoreResponseDto;
 import sopt.org.cds.domain.Menu;
@@ -50,14 +50,14 @@ public class StoreService {
         StoreDetailResponseDto response = new StoreDetailResponseDto();
         if (store.isPresent()) {
             Store storeData = store.get();
-            
-            List<MenuCategoryReponseDto> menuCategoryList = new ArrayList<>();
+
+            List<MenuCategoryResponseDto> menuCategoryList = new ArrayList<>();
             storeData.getMenuCategoryList()
                     .forEach(menuCategory -> {
-                        menuCategoryList.add(MenuCategoryReponseDto.builder()
+                        menuCategoryList.add(MenuCategoryResponseDto.builder()
                                 .id(menuCategory.getId())
                                 .name(menuCategory.getName())
-                                .menuList(getMenuResponseList(menuCategory.getMenuList()))
+                                .menus(getMenuResponseList(menuCategory.getMenuList()))
                                 .build());
                     });
 

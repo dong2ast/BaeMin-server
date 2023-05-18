@@ -23,9 +23,6 @@ public class OptionCategory {
     @Column(nullable = false)
     private String description;
 
-    @Column(nullable = false)
-    private boolean isMandatory;
-
     @OneToMany(mappedBy = "optionCategory")
     private List<Option> optionList;
 
