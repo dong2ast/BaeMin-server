@@ -29,7 +29,6 @@ public class InitDb {
         public void dbInit() {
             Cart cart = Cart.createCart();
             em.persist(cart);
-            System.out.println(cart.getId());
 
             Store store = new Store("정담초밥", "dqweqwe-scqweq32wdsa", 4.7, 15000, 4400, 22, 38, false); //store만 다시 만듭시다 Nullable
             em.persist(store);
