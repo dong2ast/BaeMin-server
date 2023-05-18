@@ -20,9 +20,24 @@ public class CartItemRepository {
         }
     }
 
-    public List<CartItem> findAll() {
-        return em.createQuery("select i from CartItem i", CartItem.class).getResultList();
+    public List<CartItem> findAll(Long cartStoreId) {
+        return em.createQuery("select i from CartItem i where i.cartStore.id = :cartStoreId", CartItem.class).getResultList();
     }
 
+    public CartItem findbyStoreId(Long cartStoreId) {
+        return em.createQuery("select i from CartItem i where i.cartStore.id = :cartStoreId", CartItem.class)
+                .setParameter("cartStoreId", cartStoreId)
+                .getSingleResult();
+    }
+
+    public CartItem findbyId(Long cartItemId) {
+        return em.find(CartItem.class, cartItemId);
+    }
+
+    public Long deleteCartItem(Long cartItemId) {
+        CartItem cartItem = findbyId(cartItemId);
+        em.remove(cartItem);
+        return cartItemId;
+    }
 
 }

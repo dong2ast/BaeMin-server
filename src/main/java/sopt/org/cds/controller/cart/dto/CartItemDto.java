@@ -9,6 +9,8 @@ import lombok.Getter;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class CartItemDto {
 
+    private Long cartItemId;
+
     private String name;
 
     private int totalPrice;
@@ -17,7 +19,7 @@ public class CartItemDto {
 
     private int count;
 
-    public static CartItemDto of(String name, Integer totalPrice, String options, Integer count){
-        return new CartItemDto(name, totalPrice, options, count);
+    public static CartItemDto of(Long cartItemId, String name, Integer totalPrice, String options, Integer count) {
+        return new CartItemDto(cartItemId, name, totalPrice, options, count);
     }
 }

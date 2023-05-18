@@ -6,14 +6,12 @@ import org.springframework.web.bind.annotation.*;
 import sopt.org.cds.controller.cart.dto.request.CartItemRequestDto;
 import sopt.org.cds.controller.cart.dto.response.CartItemResponseDto;
 import sopt.org.cds.controller.cart.dto.response.CartResponseDto;
-import sopt.org.cds.infrastructure.CartRepository;
 import sopt.org.cds.service.CartService;
 
 @RestController
 @RequiredArgsConstructor
 public class CartController {
     private final CartService cartService;
-    private final CartRepository cartRepository;
 
     @GetMapping("/cart/{cartId}")
     @ResponseStatus(HttpStatus.OK)
@@ -25,5 +23,11 @@ public class CartController {
     @ResponseStatus(HttpStatus.OK)
     public CartItemResponseDto addCartItem(@RequestBody final CartItemRequestDto requestDto) {
         return cartService.addCartItem(requestDto);
+    }
+
+    @DeleteMapping("/cart/{cartItemId}")
+    @ResponseStatus(HttpStatus.OK)
+    public Long deleteCartItem(@PathVariable final Long cartItemId) {
+        return cartService.deleteCartItem(cartItemId);
     }
 }

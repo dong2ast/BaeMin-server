@@ -39,14 +39,14 @@ public class CartService {
         Cart cart = cartRepository.findOne(cartId);
         List<CartStoreDto> cartStoreDtoList = new ArrayList<>();
 
-        cart.getCartStoreList().stream().forEach(cartStore -> {
+        cart.getCartStoreList().forEach(cartStore -> {
             List<CartItemDto> cartItemDtoList = new ArrayList<>();
-            cartStore.getCartItems().stream().forEach(cartItem -> {
-                cartItemDtoList.add(CartItemDto.of(cartItem.getName(), cartItem.getTotalPrice(), cartItem.getOptions(), cartItem.getCount()));
+            cartStore.getCartItems().forEach(cartItem -> {
+                cartItemDtoList.add(CartItemDto.of(cartItem.getId(), cartItem.getName(), cartItem.getTotalPrice(), cartItem.getOptions(), cartItem.getCount()));
             });
-            cartStoreDtoList.add(CartStoreDto.of(cartStore.getStore().getName(), cartStore.getStore().getImage(), cartItemDtoList));
+            cartStoreDtoList.add(CartStoreDto.of(cartStore.getId(), cartStore.getStore().getName(), cartStore.getStore().getImage(), cartItemDtoList));
         });
-        return CartResponseDto.of(cart.getId(), cartStoreDtoList);
+        return CartResponseDto.of(cart.getId(), cart.getTotalPrice(), cart.getDeliveryFee(), cartStoreDtoList);
     }
 
     /*
@@ -58,12 +58,26 @@ public class CartService {
         try {
             CartStore cartStore = cartStoreRepository.findOne(requestDto.getStoreId());
             CartItem cartItem = createCartItem(requestDto, cartStore);
+            changeCartInfo(requestDto, cartItem);
             return CartItemResponseDto.of(cartItem.getId(), cartItem.getName(), cartItem.getTotalPrice(), cartItem.getCount());
         } catch (NullPointerException e) { //cartStore가 없는 경우 cartStore를 만들고 cartItem 생성
             CartStore cartStore = createCartStore(requestDto);
             CartItem cartItem = createCartItem(requestDto, cartStore);
+            changeCartDeliveryFee(requestDto, cartItem); //장바구니 총 가격 + 배달팁 변경
             return CartItemResponseDto.of(cartItem.getId(), cartItem.getName(), cartItem.getTotalPrice(), cartItem.getCount());
         }
+    }
+
+    private Cart changeCartInfo(CartItemRequestDto requestDto, CartItem cartItem) {
+        Cart cart = cartRepository.findOne(requestDto.getCartId());
+        cart.changeTotalPrice(cartItem.getTotalPrice());
+        return cart;
+    }
+
+    private void changeCartDeliveryFee(CartItemRequestDto requestDto, CartItem cartItem) {
+        Cart cart = changeCartInfo(requestDto, cartItem);
+        cart.changeTotalPrice(storeRepository.findById(requestDto.getStoreId()).getDeliveryFee()); //전체 가격에도 배달료 추가
+        cart.chageDeliveryFee(storeRepository.findById(requestDto.getStoreId()).getDeliveryFee()); //store정보로 배달료 변경 (cartStore생성시 변경)
     }
 
     private CartStore createCartStore(CartItemRequestDto requestDto) {
@@ -78,5 +92,14 @@ public class CartService {
         CartItem cartItem = CartItem.createCartItem(requestDto.getName(), requestDto.getTotalPrice(), requestDto.getOptions(), requestDto.getCount(), cartStore);
         cartItemRepository.save(cartItem);
         return cartItem;
+    }
+
+    @Transactional
+    public Long deleteCartItem(Long cartItemId) {
+        try {
+            return cartItemRepository.deleteCartItem(cartItemId);
+        } catch (NullPointerException e) { //cartStore가 없는 경우 cartStore를 만들고 cartItem 생성
+            return -1l;
+        }
     }
 }
