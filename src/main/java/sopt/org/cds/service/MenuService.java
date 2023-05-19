@@ -1,15 +1,14 @@
 package sopt.org.cds.service;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.HttpClientErrorException;
 import sopt.org.cds.controller.menu.dto.MenuDetailResponseDto;
 import sopt.org.cds.controller.menu.dto.OptionCategoryResponseDto;
 import sopt.org.cds.controller.menu.dto.OptionResponseDto;
 import sopt.org.cds.domain.Menu;
 import sopt.org.cds.domain.Option;
 import sopt.org.cds.domain.OptionCategory;
+import sopt.org.cds.exception.NotFoundMenuException;
 import sopt.org.cds.infrastructure.MenuRepository;
 
 import java.util.List;
@@ -37,7 +36,7 @@ public class MenuService {
                     .optionCategories(getOptionCategoryList(menuData.getOptionCategoryList()))
                     .build();
         } else {
-            throw new HttpClientErrorException(HttpStatus.NOT_FOUND, "존재하지 않는 메뉴입니다.");
+            throw new NotFoundMenuException();
         }
         return response;
     }

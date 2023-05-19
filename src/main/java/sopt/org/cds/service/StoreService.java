@@ -1,9 +1,7 @@
 package sopt.org.cds.service;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.HttpClientErrorException;
 import sopt.org.cds.controller.menu.dto.MenuCategoryResponseDto;
 import sopt.org.cds.controller.menu.dto.MenuResponseDto;
 import sopt.org.cds.controller.store.dto.StoreDetailResponseDto;
@@ -11,6 +9,7 @@ import sopt.org.cds.controller.store.dto.StoreResponseDto;
 import sopt.org.cds.domain.Menu;
 import sopt.org.cds.domain.MenuCategory;
 import sopt.org.cds.domain.Store;
+import sopt.org.cds.exception.NotFoundStoreException;
 import sopt.org.cds.infrastructure.StoreRepository;
 
 import javax.transaction.Transactional;
@@ -65,7 +64,7 @@ public class StoreService {
                     .build();
 
         } else {
-            throw new HttpClientErrorException(HttpStatus.NOT_FOUND, "존재하지 않는 가게입니다.");
+            throw new NotFoundStoreException();
         }
 
         return response;
