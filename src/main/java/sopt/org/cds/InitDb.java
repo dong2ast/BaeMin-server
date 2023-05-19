@@ -52,7 +52,7 @@ public class InitDb {
 
             CartItem cartItem = CartItem.createCartItem("런치세트", "dwqe1897465", 12000, "선택: 와사비추가", 2, cartStore);
             em.persist(cartItem);
-            cart.changeTotalPrice(cartItem.getTotalPrice());
+            cart.addTotalPrice(cartItem.getTotalPrice());
             cart.changeDeliveryFee(store.getDeliveryFee());
 
 

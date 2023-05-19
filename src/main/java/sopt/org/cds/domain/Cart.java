@@ -42,8 +42,12 @@ public class Cart {
     }
 
 
-    public void changeTotalPrice(Integer price) {
+    public void addTotalPrice(Integer price) {
         this.totalPrice += price;
+    }
+
+    public void subTotalPrice(Integer price) {
+        this.totalPrice -= price;
     }
 
     public void changeDeliveryFee(Integer deliveryFee) {

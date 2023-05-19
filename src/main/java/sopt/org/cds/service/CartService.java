@@ -63,7 +63,8 @@ public class CartService {
             return getCartItemResponseDto(requestDto, cartStore);
         } catch (NullPointerException e) { //cartStore가 없는 경우 cartStore를 만들고 cartItem 생성
             CartStore cartStore = createCartStore(requestDto);
-            return getCartItemResponseDto(requestDto, cartStore);
+            CartItem cartItem = createCartItem(requestDto, cartStore);
+            return changeCartDeliveryFee(requestDto, cartItem);
         }
     }
 
@@ -76,17 +77,18 @@ public class CartService {
     //장바구니에 띄워질 총 주문금액 계산 메서드
     private Cart changeCartInfo(CartItemRequestDto requestDto, CartItem cartItem) {
         Cart cart = cartRepository.findOne(requestDto.getCartId());
-        cart.changeTotalPrice(cartItem.getTotalPrice());
+        cart.addTotalPrice(cartItem.getTotalPrice());
         return cart;
     }
 
     //장바구니에 띄워질 총 주문금액 계산 메서드 (cartStore가 추가된 케이스이므로 배달료도 변경)
-    private void changeCartDeliveryFee(CartItemRequestDto requestDto, CartItem cartItem) {
+    private CartItemResponseDto changeCartDeliveryFee(CartItemRequestDto requestDto, CartItem cartItem) {
         Cart cart = changeCartInfo(requestDto, cartItem);
         Optional<Store> store = storeRepository.findById(requestDto.getStoreId());
         if (store.isPresent()) {
             cart.changeDeliveryFee(store.get().getDeliveryFee()); //store정보로 배달료 변경 (cartStore생성시 변경)
         }
+        return CartItemResponseDto.of(cartItem.getId(), cartItem.getName(), cartItem.getTotalPrice(), cartItem.getCount());
     }
 
     /*
@@ -135,6 +137,8 @@ public class CartService {
     public CartItemResponseDto deleteCartItem(Long cartItemId) throws InvalidCartItemException {
         try {
             CartItem cartItem = cartItemRepository.findbyId(cartItemId);
+            Cart cart = cartItem.getCartStore().getCart();
+            cart.subTotalPrice(cartItem.getTotalPrice());
             cartItemRepository.deleteCartItem(cartItemId);
             return CartItemResponseDto.of(cartItem.getId(), cartItem.getName(), cartItem.getTotalPrice(), cartItem.getCount());
         } catch (NullPointerException e) {

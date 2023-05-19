@@ -12,7 +12,11 @@ public class CartRepository {
     private final EntityManager em;
 
     public void save(Cart cart) {
-        em.persist(cart);
+        if (cart.getId() == null) {
+            em.persist(cart);
+        } else {
+            em.merge(cart);
+        }
     }
 
     public Cart findOne(Long id) {
