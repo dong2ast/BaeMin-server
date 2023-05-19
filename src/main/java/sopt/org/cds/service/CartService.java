@@ -14,14 +14,15 @@ import sopt.org.cds.domain.CartStore;
 import sopt.org.cds.domain.Store;
 import sopt.org.cds.exception.InvalidCartException;
 import sopt.org.cds.exception.InvalidCartItemException;
+import sopt.org.cds.exception.NotFoundStoreException;
 import sopt.org.cds.infrastructure.CartItemRepository;
 import sopt.org.cds.infrastructure.CartRepository;
 import sopt.org.cds.infrastructure.CartStoreRepository;
 import sopt.org.cds.infrastructure.StoreRepository;
 
-import javax.persistence.NoResultException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @Service
@@ -62,20 +63,18 @@ public class CartService {
     @Transactional
     public CartItemResponseDto addCartItem(CartItemRequestDto requestDto) throws InvalidCartException {
         try {
-            try {
-                CartStore cartStore = cartStoreRepository.findOne(requestDto.getStoreId());
-                CartItem cartItem = createCartItem(requestDto, cartStore);
-                changeCartInfo(requestDto, cartItem);
-                return CartItemResponseDto.of(cartItem.getId(), cartItem.getName(), cartItem.getTotalPrice(), cartItem.getCount());
-            } catch (NoResultException e) {
-                throw new InvalidCartException();
-            }
+            CartStore cartStore = cartStoreRepository.findOne(requestDto.getStoreId());
+            return getCartItemResponseDto(requestDto, cartStore);
         } catch (NullPointerException e) { //cartStore가 없는 경우 cartStore를 만들고 cartItem 생성
             CartStore cartStore = createCartStore(requestDto);
-            CartItem cartItem = createCartItem(requestDto, cartStore);
-            changeCartDeliveryFee(requestDto, cartItem); //cartStore가 추가되었을 때 장바구니 총 가격 + 배달팁 변경
-            return CartItemResponseDto.of(cartItem.getId(), cartItem.getName(), cartItem.getTotalPrice(), cartItem.getCount());
+            return getCartItemResponseDto(requestDto, cartStore);
         }
+    }
+
+    private CartItemResponseDto getCartItemResponseDto(CartItemRequestDto requestDto, CartStore cartStore) {
+        CartItem cartItem = createCartItem(requestDto, cartStore);
+        changeCartInfo(requestDto, cartItem);
+        return CartItemResponseDto.of(cartItem.getId(), cartItem.getName(), cartItem.getTotalPrice(), cartItem.getCount());
     }
 
     //장바구니에 띄워질 총 주문금액 계산 메서드
@@ -97,12 +96,17 @@ public class CartService {
     /*
         장바구니에 store그룹 생성
      */
-    private CartStore createCartStore(CartItemRequestDto requestDto) {
-        Store store = storeRepository.findById(requestDto.getStoreId()).get();
-        Cart cart = cartRepository.findOne(requestDto.getCartId());
-        CartStore cartStore = CartStore.createCart(store, cart);
-        cartStoreRepository.save(cartStore);
-        return cartStore;
+    private CartStore createCartStore(CartItemRequestDto requestDto) throws NotFoundStoreException {
+        try {
+            Store store = storeRepository.findById(requestDto.getStoreId()).get();
+            Cart cart = cartRepository.findOne(requestDto.getCartId());
+            CartStore cartStore = CartStore.createCart(store, cart);
+            cartStoreRepository.save(cartStore);
+            return cartStore;
+        } catch (NoSuchElementException e) {
+            throw new NotFoundStoreException();
+        }
+
     }
 
     /*

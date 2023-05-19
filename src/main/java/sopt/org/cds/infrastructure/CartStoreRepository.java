@@ -16,8 +16,6 @@ public class CartStoreRepository {
     }
 
     public CartStore findOne(Long id) {
-        return em.createQuery("select c from CartStore c where c.store.id= :id", CartStore.class)
-                .setParameter("id", id)
-                .getSingleResult();
+        return em.find(CartStore.class, id);
     }
 }
