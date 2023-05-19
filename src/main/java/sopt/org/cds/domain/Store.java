@@ -42,4 +42,15 @@ public class Store {
     @OneToMany(mappedBy = "store")
     private List<MenuCategory> menuCategoryList;
 
+    public Store(String name, String image, Double rate, Integer minOrderAmount, Integer deliveryFee, Integer minDeliveryTime, Integer maxDeliveryTime, boolean hasCoupon) {
+        this.name = name;
+        this.image = image;
+        this.rate = rate;
+        this.minOrderAmount = minOrderAmount;
+        this.deliveryFee = deliveryFee;
+        this.minDeliveryTime = minDeliveryTime;
+        this.maxDeliveryTime = maxDeliveryTime;
+        this.hasCoupon = hasCoupon;
+    }
+
 }

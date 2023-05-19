@@ -30,5 +30,25 @@ public class Cart {
     @OneToMany(mappedBy = "cart")
     private List<CartStore> cartStoreList;
 
+    private Cart(Integer totalPrice, Integer deliveryFee) {
+//        this.user = user;
+        this.totalPrice = totalPrice;
+        this.deliveryFee = deliveryFee;
+    }
 
+    public static Cart createCart() {
+        return new Cart(0, 0);
+    }
+
+    public static Cart createCart(Integer totalPrice, Integer deliveryFee) {
+        return new Cart(totalPrice, deliveryFee);
+    }
+
+    public void changeTotalPrice(Integer price) {
+        this.totalPrice += price;
+    }
+
+    public void chageDeliveryFee(Integer deliveryFee) {
+        this.deliveryFee += deliveryFee;
+    }
 }
