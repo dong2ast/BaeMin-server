@@ -11,7 +11,6 @@ import java.util.List;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@Table(name = "option_category")
 public class OptionCategory {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

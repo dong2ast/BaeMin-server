@@ -27,7 +27,7 @@ public class CartStore {
     @JoinColumn
     private Cart cart;
 
-    private CartStore(Store store, Cart cart){
+    private CartStore(Store store, Cart cart) {
         this.store = store;
         this.cart = cart;
         cartItems = new ArrayList<>();

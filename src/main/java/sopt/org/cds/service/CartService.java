@@ -19,6 +19,7 @@ import sopt.org.cds.infrastructure.CartRepository;
 import sopt.org.cds.infrastructure.CartStoreRepository;
 import sopt.org.cds.infrastructure.StoreRepository;
 
+import javax.persistence.NoResultException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -59,12 +60,16 @@ public class CartService {
         CartStore객체는 해당 메서드 내에서 생성됨 (CartItem의 storeId를 가진 CartStore 객체가 없을 경우)
      */
     @Transactional
-    public CartItemResponseDto addCartItem(CartItemRequestDto requestDto) {
+    public CartItemResponseDto addCartItem(CartItemRequestDto requestDto) throws InvalidCartException {
         try {
-            CartStore cartStore = cartStoreRepository.findOne(requestDto.getStoreId());
-            CartItem cartItem = createCartItem(requestDto, cartStore);
-            changeCartInfo(requestDto, cartItem);
-            return CartItemResponseDto.of(cartItem.getId(), cartItem.getName(), cartItem.getTotalPrice(), cartItem.getCount());
+            try {
+                CartStore cartStore = cartStoreRepository.findOne(requestDto.getStoreId());
+                CartItem cartItem = createCartItem(requestDto, cartStore);
+                changeCartInfo(requestDto, cartItem);
+                return CartItemResponseDto.of(cartItem.getId(), cartItem.getName(), cartItem.getTotalPrice(), cartItem.getCount());
+            } catch (NoResultException e) {
+                throw new InvalidCartException();
+            }
         } catch (NullPointerException e) { //cartStore가 없는 경우 cartStore를 만들고 cartItem 생성
             CartStore cartStore = createCartStore(requestDto);
             CartItem cartItem = createCartItem(requestDto, cartStore);
@@ -85,8 +90,7 @@ public class CartService {
         Cart cart = changeCartInfo(requestDto, cartItem);
         Optional<Store> store = storeRepository.findById(requestDto.getStoreId());
         if (store.isPresent()) {
-            cart.changeTotalPrice(store.get().getDeliveryFee()); //전체 가격에도 배달료 추가
-            cart.chageDeliveryFee(store.get().getDeliveryFee()); //store정보로 배달료 변경 (cartStore생성시 변경)
+            cart.changeDeliveryFee(store.get().getDeliveryFee()); //store정보로 배달료 변경 (cartStore생성시 변경)
         }
     }
 
