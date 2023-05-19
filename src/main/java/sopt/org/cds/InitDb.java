@@ -26,7 +26,10 @@ public class InitDb {
 
         @Transactional
         public void dbInit() {
-            Cart cart = Cart.createCart();
+            User user = User.createUser("송파구 올림픽로 135");
+            em.persist(user);
+
+            Cart cart = Cart.createCart(user);
             em.persist(cart);
 
             Store store = new Store("정담초밥", "dqweqwe-scqweq32wdsa", 4.7, 15000, 4400, 22, 38, false); //store만 다시 만듭시다 Nullable
@@ -51,9 +54,6 @@ public class InitDb {
             em.persist(cartItem);
             cart.changeTotalPrice(cartItem.getTotalPrice());
             cart.changeDeliveryFee(store.getDeliveryFee());
-
-            User user = User.createUser("송파구 올림픽로 135", cart);
-            em.persist(user);
 
 
         }

@@ -19,5 +19,11 @@ public class CartRepository {
         return em.find(Cart.class, id);
     }
 
+    public Long delete(Long id) {
+        Cart cart = findOne(id);
+        em.remove(cart);
+        return id;
+    }
+
 
 }

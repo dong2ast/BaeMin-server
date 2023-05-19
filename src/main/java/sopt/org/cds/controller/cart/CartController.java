@@ -18,10 +18,10 @@ import static sopt.org.cds.exception.SuccessStatus.*;
 public class CartController {
     private final CartService cartService;
 
-    @GetMapping("/{cartId}")
+    @GetMapping("/{userId}")
     @ResponseStatus(HttpStatus.OK)
-    public ApiResponseDto<CartResponseDto> getCartById(@PathVariable final Long cartId) {
-        return ApiResponseDto.success(GET_CART_SUCCESS, cartService.getCart(cartId));
+    public ApiResponseDto<CartResponseDto> getCartById(@PathVariable final Long userId) {
+        return ApiResponseDto.success(GET_CART_SUCCESS, cartService.getCart(userId));
     }
 
     @PostMapping
@@ -40,5 +40,11 @@ public class CartController {
     @ResponseStatus(HttpStatus.OK)
     public ApiResponseDto<CartItemResponseDto> deleteCartItem(@PathVariable final Long cartItemId) {
         return ApiResponseDto.success(DELETE_ITEM_SUCCESS, cartService.deleteCartItem(cartItemId));
+    }
+
+    @PostMapping("/{cartId}")
+    @ResponseStatus(HttpStatus.OK)
+    public ApiResponseDto<Long> order(@PathVariable final Long cartId) {
+        return ApiResponseDto.success(ORDER_SUCCESS, cartService.order(cartId));
     }
 }

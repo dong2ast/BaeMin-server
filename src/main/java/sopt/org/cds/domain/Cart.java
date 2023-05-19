@@ -27,22 +27,20 @@ public class Cart {
     private User user;
 
 
-    @OneToMany(mappedBy = "cart")
+    @OneToMany(mappedBy = "cart", cascade = CascadeType.ALL)
     private List<CartStore> cartStoreList;
 
-    private Cart(Integer totalPrice, Integer deliveryFee) {
-//        this.user = user;
+    private Cart(User user, Integer totalPrice, Integer deliveryFee) {
+        this.user = user;
+        user.changeCart(this);
         this.totalPrice = totalPrice;
         this.deliveryFee = deliveryFee;
     }
 
-    public static Cart createCart() {
-        return new Cart(0, 0);
+    public static Cart createCart(User user) {
+        return new Cart(user, 0, 0);
     }
 
-    public static Cart createCart(Integer totalPrice, Integer deliveryFee) {
-        return new Cart(totalPrice, deliveryFee);
-    }
 
     public void changeTotalPrice(Integer price) {
         this.totalPrice += price;
