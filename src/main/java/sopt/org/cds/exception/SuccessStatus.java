@@ -17,6 +17,7 @@ public enum SuccessStatus {
     GET_STORE_LIST_SUCCESS(HttpStatus.OK, "가게 리스트를 성공적으로 불러왔습니다."),
     GET_STORE_DETAIL_SUCCESS(HttpStatus.OK, "가게 정보를 성공적으로 불러왔습니다."),
     GET_MENU_DETAIL_SUCCESS(HttpStatus.OK, "메뉴 정보를 성공적으로 불러왔습니다."),
+    ORDER_SUCCESS(HttpStatus.OK, "주문 성공"),
     ;
 
     private final HttpStatus httpStatus;

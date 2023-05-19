@@ -20,7 +20,7 @@ public class CartStore {
     @JoinColumn
     private Store store;
 
-    @OneToMany(mappedBy = "cartStore")
+    @OneToMany(mappedBy = "cartStore", cascade = CascadeType.ALL)
     private List<CartItem> cartItems;
 
     @ManyToOne(fetch = FetchType.LAZY)

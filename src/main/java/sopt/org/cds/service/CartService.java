@@ -8,17 +8,11 @@ import sopt.org.cds.controller.cart.dto.CartStoreDto;
 import sopt.org.cds.controller.cart.dto.request.CartItemRequestDto;
 import sopt.org.cds.controller.cart.dto.response.CartItemResponseDto;
 import sopt.org.cds.controller.cart.dto.response.CartResponseDto;
-import sopt.org.cds.domain.Cart;
-import sopt.org.cds.domain.CartItem;
-import sopt.org.cds.domain.CartStore;
-import sopt.org.cds.domain.Store;
+import sopt.org.cds.domain.*;
 import sopt.org.cds.exception.InvalidCartException;
 import sopt.org.cds.exception.InvalidCartItemException;
 import sopt.org.cds.exception.NotFoundStoreException;
-import sopt.org.cds.infrastructure.CartItemRepository;
-import sopt.org.cds.infrastructure.CartRepository;
-import sopt.org.cds.infrastructure.CartStoreRepository;
-import sopt.org.cds.infrastructure.StoreRepository;
+import sopt.org.cds.infrastructure.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,15 +26,17 @@ public class CartService {
     private final StoreRepository storeRepository;
     private final CartStoreRepository cartStoreRepository;
     private final CartItemRepository cartItemRepository;
+    private final UserRepository userRepository;
 
     /*
         카트를 받아오는 메서드 [Get]
         카트를 받아오기 위해 Cart Store와 Cart Item들을 전부 가져와야한다.
         Dto가 3개 사용됨
      */
-    public CartResponseDto getCart(Long cartId) throws InvalidCartException { //uid만 쓰는거면 dto 안써도 될 것 같은데,
+    public CartResponseDto getCart(Long userId) throws InvalidCartException { //uid만 쓰는거면 dto 안써도 될 것 같은데,
         try {
-            Cart cart = cartRepository.findOne(cartId); //error 가능성
+            User user = userRepository.findById(userId).get();
+            Cart cart = cartRepository.findOne(user.getCart().getId()); //error 가능성
             List<CartStoreDto> cartStoreDtoList = new ArrayList<>();
 
             cart.getCartStoreList().forEach(cartStore -> {
@@ -144,5 +140,14 @@ public class CartService {
         } catch (NullPointerException e) {
             throw new InvalidCartItemException();
         }
+    }
+
+    @Transactional
+    public Long order(Long cartId) throws InvalidCartItemException {
+        Cart cart = cartRepository.findOne(cartId);
+        User user = cart.getUser();
+        cartRepository.delete(cartId);
+        Cart newCart = Cart.createCart(user);
+        return cartId;
     }
 }
