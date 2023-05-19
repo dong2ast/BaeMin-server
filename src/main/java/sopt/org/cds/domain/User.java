@@ -18,7 +18,16 @@ public class User {
     @Column(nullable = false)
     private String address;
 
-//    @OneToOne
-//    @JoinColumn
-//    private Cart cart;
+    @OneToOne
+    @JoinColumn
+    private Cart cart;
+
+    public User(String address, Cart cart) {
+        this.address = address;
+        this.cart = cart;
+    }
+
+    public static User createUser(String address, Cart cart) {
+        return new User(address, cart);
+    }
 }

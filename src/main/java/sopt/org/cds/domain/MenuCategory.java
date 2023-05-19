@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -25,4 +26,15 @@ public class MenuCategory {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn
     private Store store;
+
+    public MenuCategory(String name, Store store) {
+        this.name = name;
+        this.store = store;
+        menuList = new ArrayList<>();
+        store.getMenuCategoryList().add(this);
+    }
+
+    public static MenuCategory createMenuCategory(String name, Store store) {
+        return new MenuCategory(name, store);
+    }
 }

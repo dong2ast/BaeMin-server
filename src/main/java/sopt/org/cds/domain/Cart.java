@@ -23,8 +23,8 @@ public class Cart {
     @Column
     private int deliveryFee;
 
-//    @OneToOne(mappedBy = "cart")
-//    private User user;
+    @OneToOne(mappedBy = "cart")
+    private User user;
 
 
     @OneToMany(mappedBy = "cart")

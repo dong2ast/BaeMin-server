@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -51,6 +52,8 @@ public class Store {
         this.minDeliveryTime = minDeliveryTime;
         this.maxDeliveryTime = maxDeliveryTime;
         this.hasCoupon = hasCoupon;
+        menuCategoryList = new ArrayList<>();
     }
+
 
 }
