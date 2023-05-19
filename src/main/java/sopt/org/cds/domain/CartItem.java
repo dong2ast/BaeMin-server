@@ -19,7 +19,7 @@ public class CartItem {
     private String name;
 
     @Column(nullable = false)
-    private int basePrice; //이거 있어야될까?
+    private String image;
 
     @Column(nullable = false)
     private int totalPrice;
@@ -34,18 +34,9 @@ public class CartItem {
     @JoinColumn
     private CartStore cartStore;
 
-    @Override
-    public String toString() {
-        return "cartItem{" +
-                "name='" + name + '\'' +
-                "price='" + totalPrice + '\'' +
-                "options='" + options + '\'' +
-                "count='" + count + '\'' +
-                '}';
-    }
-
-    private CartItem(String name, Integer totalPrice, String options, Integer count, CartStore cartStore) {
+    private CartItem(String name, String image, Integer totalPrice, String options, Integer count, CartStore cartStore) {
         this.name = name;
+        this.image = image;
         this.totalPrice = totalPrice;
         this.options = options;
         this.count = count;
@@ -53,8 +44,8 @@ public class CartItem {
         cartStore.getCartItems().add(this); //cartStore에 자기자신 추가
     }
 
-    public static CartItem createCartItem(String name, Integer totalPrice, String options, Integer count, CartStore cartStore) {
-        return new CartItem(name, totalPrice, options, count, cartStore);
+    public static CartItem createCartItem(String name, String image, Integer totalPrice, String options, Integer count, CartStore cartStore) {
+        return new CartItem(name, image, totalPrice, options, count, cartStore);
     }
 
     public void changeCount(Integer count) {

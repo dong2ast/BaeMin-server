@@ -28,9 +28,9 @@ public class CartController {
         return ApiResponseDto.success(CREATE_ITEM_SUCCESS, cartService.addCartItem(requestDto));
     }
 
-    @PatchMapping("/cart/{cartItemId}/{count}")
+    @PatchMapping("/cart/{cartItemId}")
     @ResponseStatus(HttpStatus.OK)
-    public ApiResponseDto<CartItemResponseDto> patchCartItem(@PathVariable final Long cartItemId, @PathVariable final Integer count) {
+    public ApiResponseDto<CartItemResponseDto> patchCartItem(@PathVariable final Long cartItemId, @RequestBody final Integer count) {
         return ApiResponseDto.success(CHANGE_COUNT_SUCCESS, cartService.patchCartItem(cartItemId, count));
     }
 

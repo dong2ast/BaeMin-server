@@ -36,7 +36,7 @@ public class InitDb {
             CartStore cartStore = CartStore.createCart(store, cart);
             em.persist(cartStore);
 
-            CartItem cartItem = CartItem.createCartItem("런치세트", 12000, "선택: 와사비추가", 2, cartStore);
+            CartItem cartItem = CartItem.createCartItem("런치세트", "dwqe1897465", 12000, "선택: 와사비추가", 2, cartStore);
             em.persist(cartItem);
 
             em.flush();
