@@ -9,6 +9,7 @@ import sopt.org.cds.controller.cart.dto.request.CountRequestDto;
 import sopt.org.cds.controller.cart.dto.response.CartItemResponseDto;
 import sopt.org.cds.controller.cart.dto.response.CartResponseDto;
 import sopt.org.cds.service.CartService;
+import sopt.org.cds.service.UserService;
 
 import static sopt.org.cds.exception.SuccessStatus.*;
 
@@ -17,10 +18,12 @@ import static sopt.org.cds.exception.SuccessStatus.*;
 @RequestMapping("/cart")
 public class CartController {
     private final CartService cartService;
+    private final UserService userService;
 
-    @GetMapping("/{userId}")
+    @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public ApiResponseDto<CartResponseDto> getCartById(@PathVariable final Long userId) {
+    public ApiResponseDto<CartResponseDto> getCartById(@RequestHeader String Authorization) {
+        Long userId = userService.getUserIdWithToken(Authorization);
         return ApiResponseDto.success(GET_CART_SUCCESS, cartService.getCart(userId));
     }
 

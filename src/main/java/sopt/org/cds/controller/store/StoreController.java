@@ -31,6 +31,6 @@ public class StoreController {
     @ResponseStatus(HttpStatus.OK)
     public ApiResponseDto<StoreDetailResponseDto> getStoreDetail(@PathVariable final Long id) {
         StoreDetailResponseDto data = storeService.getStoreDetail(id);
-        return ApiResponseDto.success(SuccessStatus.GET_STORE_LIST_SUCCESS, data);
+        return ApiResponseDto.success(SuccessStatus.GET_STORE_DETAIL_SUCCESS, data);
     }
 }
