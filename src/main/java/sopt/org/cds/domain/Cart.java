@@ -48,7 +48,8 @@ public class Cart {
         this.totalPrice += price;
     }
 
-    public void chageDeliveryFee(Integer deliveryFee) {
+    public void changeDeliveryFee(Integer deliveryFee) {
+        this.totalPrice += deliveryFee;
         this.deliveryFee += deliveryFee;
     }
 }

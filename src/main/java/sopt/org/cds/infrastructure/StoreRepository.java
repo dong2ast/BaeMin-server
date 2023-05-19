@@ -1,13 +1,24 @@
 package sopt.org.cds.infrastructure;
 
-import org.springframework.data.jpa.repository.JpaRepository;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Repository;
 import sopt.org.cds.domain.Store;
 
+import javax.persistence.EntityManager;
 import java.util.List;
 import java.util.Optional;
 
-public interface StoreRepository extends JpaRepository<Store, Long> {
-    Optional<Store> findById(Long id);
+@Repository
+@RequiredArgsConstructor
+public class StoreRepository {
+    private final EntityManager em;
 
-    List<Store> findAll();
+    public Optional<Store> findById(Long storeId) {
+        return Optional.ofNullable(em.find(Store.class, storeId));
+    }
+
+
+    public List<Store> findAll() {
+        return em.createQuery("select i from Store i", Store.class).getResultList();
+    }
 }
