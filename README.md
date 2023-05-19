@@ -67,6 +67,7 @@ server의 작업공간
 - 본문은 어떻게 보다 무엇을, 왜에 대하여 설명
 
 ## 프로젝트 구조
+![image](https://github.com/SOPT-32-CDS/BaeMin-server/assets/31067658/9cec4ae4-538c-456d-8350-07f7d922aae2)
 
 ## ERD
 <img width="954" alt="스크린샷 2023-05-17 오후 2 47 55" src="https://github.com/SOPT-32-CDS/BaeMin-server/assets/72637095/12b36a21-9d54-4fbf-bb71-8e589f895e6d">
