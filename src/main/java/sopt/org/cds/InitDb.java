@@ -1,6 +1,7 @@
 package sopt.org.cds;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import sopt.org.cds.domain.Cart;
 import sopt.org.cds.domain.CartItem;
@@ -10,7 +11,7 @@ import sopt.org.cds.domain.Store;
 import javax.annotation.PostConstruct;
 import javax.persistence.EntityManager;
 
-//@Component
+@Component
 @RequiredArgsConstructor
 public class InitDb {
     private final InitService initService;
@@ -20,12 +21,13 @@ public class InitDb {
         initService.dbInit();
     }
 
-    //    @Component
+    @Component
     @Transactional
     @RequiredArgsConstructor
     static class InitService {
         private final EntityManager em;
 
+        @Transactional
         public void dbInit() {
             Cart cart = Cart.createCart();
             em.persist(cart);
@@ -38,8 +40,9 @@ public class InitDb {
 
             CartItem cartItem = CartItem.createCartItem("런치세트", "dwqe1897465", 12000, "선택: 와사비추가", 2, cartStore);
             em.persist(cartItem);
+            cart.changeTotalPrice(cartItem.getTotalPrice());
+            cart.changeDeliveryFee(store.getDeliveryFee());
 
-            em.flush();
         }
     }
 
