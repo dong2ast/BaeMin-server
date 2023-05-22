@@ -12,9 +12,9 @@ public class CartStoreDto {
     private Long cartStoreId;
     private String name;
     private String image;
-    private List<CartItemDto> cartItemDtoList;
+    private List<CartItemDto> cartItemList;
 
-    public static CartStoreDto of(Long cartStoreId, String name, String image, List<CartItemDto> cartItemDtoList) {
-        return new CartStoreDto(cartStoreId, name, image, cartItemDtoList);
+    public static CartStoreDto of(Long cartStoreId, String name, String image, List<CartItemDto> cartItemList) {
+        return new CartStoreDto(cartStoreId, name, image, cartItemList);
     }
 }

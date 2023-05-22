@@ -13,9 +13,9 @@ public class CartResponseDto {
     private Long cartId;
     private Integer totalPrice;
     private Integer deliveryFee;
-    private List<CartStoreDto> cartStoreDtoList;
+    private List<CartStoreDto> cartStoreList;
 
-    public static CartResponseDto of(Long cartId, Integer totalPrice, Integer deliveryFee, List<CartStoreDto> cartStoreDtoList) {
-        return new CartResponseDto(cartId, totalPrice, deliveryFee, cartStoreDtoList);
+    public static CartResponseDto of(Long cartId, Integer totalPrice, Integer deliveryFee, List<CartStoreDto> cartStoreList) {
+        return new CartResponseDto(cartId, totalPrice, deliveryFee, cartStoreList);
     }
 }
