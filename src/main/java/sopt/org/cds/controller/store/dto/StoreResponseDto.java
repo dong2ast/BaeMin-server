@@ -27,7 +27,7 @@ public class StoreResponseDto {
 
     private int maxDeliveryTime;
 
-    private boolean hasCoupon;
+    private String coupon;
 
 
 }

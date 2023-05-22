@@ -34,9 +34,9 @@ public class StoreService {
                         .rate(store.getRate())
                         .deliveryFee(store.getDeliveryFee())
                         .maxDeliveryTime(store.getMaxDeliveryTime())
-                        .minDeliveryTime(store.getMinOrderAmount())
+                        .minDeliveryTime(store.getMinDeliveryTime())
                         .minOrderAmount(store.getMinOrderAmount())
-                        .hasCoupon(store.isHasCoupon())
+                        .coupon(store.getCoupon())
                         .build())
                 .collect(Collectors.toList());
 
@@ -57,9 +57,9 @@ public class StoreService {
                     .rate(storeData.getRate())
                     .deliveryFee(storeData.getDeliveryFee())
                     .maxDeliveryTime(storeData.getMaxDeliveryTime())
-                    .minDeliveryTime(storeData.getMinOrderAmount())
+                    .minDeliveryTime(storeData.getMinDeliveryTime())
                     .minOrderAmount(storeData.getMinOrderAmount())
-                    .hasCoupon(storeData.isHasCoupon())
+                    .coupon(storeData.getCoupon())
                     .menuCategories(getMenuCategoryResponseList(storeData.getMenuCategoryList()))
                     .build();
 

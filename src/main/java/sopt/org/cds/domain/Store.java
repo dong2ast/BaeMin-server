@@ -37,13 +37,13 @@ public class Store {
     @Column(nullable = false)
     private int maxDeliveryTime;
 
-    @Column(nullable = false)
-    private boolean hasCoupon;
+    @Column
+    private String coupon;
 
     @OneToMany(mappedBy = "store")
     private List<MenuCategory> menuCategoryList;
 
-    public Store(String name, String image, Double rate, Integer minOrderAmount, Integer deliveryFee, Integer minDeliveryTime, Integer maxDeliveryTime, boolean hasCoupon) {
+    public Store(String name, String image, Double rate, Integer minOrderAmount, Integer deliveryFee, Integer minDeliveryTime, Integer maxDeliveryTime, String coupon) {
         this.name = name;
         this.image = image;
         this.rate = rate;
@@ -51,7 +51,7 @@ public class Store {
         this.deliveryFee = deliveryFee;
         this.minDeliveryTime = minDeliveryTime;
         this.maxDeliveryTime = maxDeliveryTime;
-        this.hasCoupon = hasCoupon;
+        this.coupon = coupon;
         menuCategoryList = new ArrayList<>();
     }
 
