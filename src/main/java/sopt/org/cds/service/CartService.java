@@ -147,7 +147,7 @@ public class CartService {
     }
 
     @Transactional
-    public Long order(Long cartId) throws InvalidCartItemException {
+    public Long order(Long cartId) {
         Cart cart = cartRepository.findOne(cartId);
         User user = cart.getUser();
         cartRepository.delete(cartId);
