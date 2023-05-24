@@ -42,7 +42,7 @@ public class CartService {
             cart.getCartStoreList().forEach(cartStore -> {
                 List<CartItemDto> cartItemDtoList = new ArrayList<>();
                 cartStore.getCartItems().forEach(cartItem -> {
-                    cartItemDtoList.add(CartItemDto.of(cartItem.getId(), cartItem.getName(), cartItem.getTotalPrice(), cartItem.getOptions(), cartItem.getCount()));
+                    cartItemDtoList.add(CartItemDto.of(cartItem.getId(), cartItem.getName(), cartItem.getImage(), cartItem.getTotalPrice(), cartItem.getOptions(), cartItem.getCount()));
                 });
                 cartStoreDtoList.add(CartStoreDto.of(cartStore.getId(), cartStore.getStore().getName(), cartStore.getStore().getImage(), cartItemDtoList));
             });
