@@ -13,13 +13,15 @@ public class CartItemDto {
 
     private String name;
 
+    private String image;
+
     private int totalPrice;
 
     private String options;
 
     private int count;
 
-    public static CartItemDto of(Long cartItemId, String name, Integer totalPrice, String options, Integer count) {
-        return new CartItemDto(cartItemId, name, totalPrice, options, count);
+    public static CartItemDto of(Long cartItemId, String name, String image, Integer totalPrice, String options, Integer count) {
+        return new CartItemDto(cartItemId, name, image, totalPrice, options, count);
     }
 }
