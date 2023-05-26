@@ -62,6 +62,24 @@ public class InitDb {
             Option option = new Option("새우튀김 6p 추가", 7000, optionCategory);
             em.persist(option);
 
+            Option option3 = new Option("새우튀김 12p 추가", 13000, optionCategory);
+            em.persist(option3);
+
+            Option option4 = new Option("모듬튀김 추가", 13000, optionCategory);
+            em.persist(option4);
+
+            OptionCategory optionCategory3 = new OptionCategory("와사비 밥양 추가 선택", "최대 3개 선택", menu);
+            em.persist(optionCategory3);
+
+            Option option5 = new Option("밥양 조금(변경)", 0, optionCategory3);
+            em.persist(option5);
+
+            Option option6 = new Option("밥양 많이(변경)", 0, optionCategory3);
+            em.persist(option6);
+
+            Option option7 = new Option("와사비 x", 0, optionCategory3);
+            em.persist(option7);
+
             OptionCategory optionCategory2 = new OptionCategory("사이드 추가 선택", "최대 6개 선택", menu2);
             em.persist(optionCategory2);
 
