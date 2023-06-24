@@ -1,5 +1,5 @@
 # BaeMin-server
-server의 작업공간
+server의 작업공간입니다.
 
 ## 팀원소개
 
